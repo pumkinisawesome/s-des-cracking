@@ -1,23 +1,23 @@
+#![allow(dead_code)]
+#![allow(unused_imports)]
+
 use std::collections::HashMap;
+use std::env;
 use std::fs::File;
 use std::io::Read;
 
+mod keys;
+
+use keys::gen_keys;
+
 fn main() {
-    println!("Hello, world!");
+    let keys = gen_keys();
 
-    let file_path = "src/input_test.txt";
-    let mut file = File::open(file_path).expect("File not found");
+    for key in &keys {
+        println!("k1: {:#010b}, k2: {:#010b}", key.k1, key.k2);
+    }
 
-    // read the file into a vector of bytes
-    let mut contents = Vec::new();
-    file.read_to_end(&mut contents)
-        .expect("Something went wrong reading the file");
-
-    // Calculate the entropy of the file
-    let entropy = calc_entropy(&contents);
-
-    // Print the entropy
-    println!("Entropy: {}", entropy);
+    println!("Total keys generated: {}", keys.len());
 }
 
 // function to determine information entropy of a vector of bytes
