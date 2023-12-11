@@ -7,20 +7,9 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug file read write",
+            "name": "Debug",
             "program": "${workspaceFolder}/target/debug/${workspaceRootFolderName}",
-            "args": ["file_test"],
-            "cwd": "${workspaceFolder}",
-            "sourceLanguages": [
-                "rust"
-            ]
-        },
-        {
-            "type": "lldb",
-            "request": "launch",
-            "name": "Debug key gen",
-            "program": "${workspaceFolder}/target/debug/${workspaceRootFolderName}",
-            "args": ["key_test"],
+            "args": [],
             "cwd": "${workspaceFolder}",
             "sourceLanguages": [
                 "rust"
