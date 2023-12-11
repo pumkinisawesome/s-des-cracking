@@ -1,0 +1,5 @@
+Jet's test this out!
+
+I wanna test if I'm able to successfully read this file into a vector using Rust, modify the first byte as a test, then output that file to a new file.
+
+Did this work? Let's check!
