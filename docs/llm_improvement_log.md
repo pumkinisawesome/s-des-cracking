@@ -97,3 +97,60 @@ generate all 1024 possible keys, and return them in a
 `Vec<s_des::key_gen::Key>`. I also wrote some code in main to print out every
 generated key, and also use `s_des::gen_subkeys()` to demonstrate my code
 functioned correctly by using the specific example shown in the S-DES paper.
+
+## File read and write continued
+
+I asked Github Copilot for it's opinion on whether it would be a good idea to
+put the file read/write code into its own module, and it agreed, mentioning
+how Rust is very modular focused. I had a bit of a back and forth with it about
+whether I should use relative or absolute module paths, and it gave me some
+useful information on the pros and cons of both, and the reasons they're used
+by programmers.
+
+I made use of the new Copilot feature where it can answer questions based on
+your entire project workspace, file structure and all, to ask it whether it
+would suggest my project would be worth publishing on crates.io, and it's
+response was interesting:
+
+> **Me**
+>
+> @workspace Given I don't think I'll ever plan to publish my project as a
+> crate, would it be easier to just use `pub` and not worry about it? Or maybe
+> I should use `pub(crate)` where relevant, just in case I ever decide to
+> publish this as a crate.
+>
+> With your judgement of this project so far, would you think this is something
+> that would be worth publishing as a crate or not?
+>
+> **GitHub Copilot** used @workspace
+>
+> The decision to use `pub` or `pub(crate)` depends on how you want to structure
+> the visibility of your modules and functions. If you use `pub`, the item will
+> be accessible from any code that uses your crate, while `pub(crate)` makes the
+> item public within your crate only.
+>
+> As for whether your project is worth publishing as a crate, it's hard to say
+> without more context. The project seems to be a specific implementation of
+> S-DES encryption cracking, which might not be broadly applicable as a library
+> for other Rust projects. However, if you believe that others could benefit
+> from using or learning from your code, it could be worth publishing.
+> Remember, publishing a crate also comes with the responsibility of
+> maintaining it, addressing issues, and potentially adding features.
+>
+> In general, it's a good practice to limit the visibility of your code as much
+> as possible, and only expose what's necessary. This makes the code easier to
+> maintain and understand. So, even if you don't plan to publish this as a
+> crate, using `pub(crate)` where relevant could still be beneficial.
+
+I decided that while I probably won't publish this, I'll still practice using
+`pub(crate)` where relevant, to get in the habit of writing good code.
+
+## Error handling
+
+My next conversation with GitHub Copilot was about error handling. I
+asked it about the best way to handle errors in the subkey generation, as
+currently I just caused the program to panic if the key was larger than
+10 bits. It suggested I use `Result` and `?` to handle errors, and I
+implemented this in my code, and added this to some of my other functions
+as well.
+
