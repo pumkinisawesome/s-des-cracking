@@ -1,5 +1,5 @@
 # Log of LLM interactions
-Log of interactions with ChatGPT 3.5 and Github Copilot, including suggested
+Log of interactions with ChatGPT 3.5 and GitHub Copilot, including suggested
 code, structural changes, and corrections and improvements I have made to the
 things the LLMs have suggested.
 
@@ -29,7 +29,7 @@ array would be faster, it's size has to be known at compile time, and a vector
 would be much more suitable given it's size can be determined during runtime.
 
 I then made a test file to help me get the hang of the `std::fs::File` class
-and how to use it with `std::io::{Read, Write}`. Github Copilot helped out a
+and how to use it with `std::io::{Read, Write}`. GitHub Copilot helped out a
 little bit with suggestions, but I disabled it for most of the time as I wanted
 to see how much I could do on my own at first. I reenabled it after a little,
 and it helped me with my error handling for the `"File not found"`
@@ -70,15 +70,15 @@ After a couple more questions about array vs
 vector, I asked it about how I can do bit shifting and rotating in Rust, and it
 gave me some more example code.
 
-I created a function to generate subkeys from a given key, and Github Copilot
+I created a function to generate subkeys from a given key, and GitHub Copilot
 helped me out hugely by providing almost the entire function. I edited some of
-the implementation by moving some variables out of the function to become
-constants, but other than that, it didn't really need much editing.
+the implementation by moving the permutation tables out of the function to
+become constants, but other than that, it didn't really need much editing.
 
 ## Project organisation and modules
 
 Up until this point, all of my implementation (apart from my file read testing)
-was all inside `main.rs`. As it was getting cluttered, I told Github Copilot
+was all inside `main.rs`. As it was getting cluttered, I told GitHub Copilot
 what I planned to add in the future, and asked if it thought it would make
 sense to split my code into modules. As it could access my current files
 already, it suggested I split my code as shown in the screenshot found at `attachments/copilot_module_suggestion.jpg`.
@@ -100,7 +100,7 @@ functioned correctly by using the specific example shown in the S-DES paper.
 
 ## File read and write continued
 
-I asked Github Copilot for it's opinion on whether it would be a good idea to
+I asked GitHub Copilot for it's opinion on whether it would be a good idea to
 put the file read/write code into its own module, and it agreed, mentioning
 how Rust is very modular focused. I had a bit of a back and forth with it about
 whether I should use relative or absolute module paths, and it gave me some
@@ -154,3 +154,46 @@ currently I just caused the program to panic if the key was larger than
 implemented this in my code, and added this to some of my other functions
 as well.
 
+## File encryption and decryption
+
+GitHub Copilot helped me out a lot with the implementation of the
+`crypt.rs`file to begin with. I implemented the `encrypt` and `decrypt`
+functions, and started the `crypt` function myself, then enabled Copilot
+auto-complete, which provided the majority of the function. It would usually be
+consistent with its formatting, but once or twice I would have to step in and
+correct the way it handled the permutation tables, as it would sometimes try to
+do them as a match statement instead of following the pattern I started and
+saving each permutation table as a constant.
+
+When I got to the S-boxes stage, Copilot attempetd to do them as a big match
+statement, but I managed to get it to do them as a 2-d constant array instead,
+fitting with my implementation of the permutation tables better.
+
+When I got halfway through the implementation, to the stage where the steps
+repeat with the nibbles swapped, Copilot attempted to repeat the steps, but I
+opened the chat and asked it if it would be worthwile to separate this out
+into a function, to be called twice with the nibbles swapped. It agreed, and
+named its function `feistel_round`. When I asked why, it actually taught me
+that the name for this was a "Feistel round", named after its inventor, Horst
+Feistel.
+
+Unfortunately, it's implementation of the Feistel round had a bug somewhere, so
+I spent some time manually going through in the debugger using the example
+given in the S-DES paper, and I found and fixed the point it deviated.
+
+## Testing with a real file and entropy analysis... oops
+
+I created a small test file, and did some testing by encrypting and decrypting
+this file, and comparing the output to the original file. I confirmed that it
+worked correctly. Then, I added in calculating the entropy of the file when it
+was plain text, and when it was encrypted. I was expecting the entropy to be
+different, but realised that there would be a problem with this method of
+determining that the encryption had been a success.
+
+## Shakespeare character frequency analisis
+
+I used GitHub Copilot to write me a program to take in a file, and output the
+frequency of each character in the file, which it did so completely correctly,
+and I guided it to modify the file slightly to better fit my needs. I fed it
+Shakespeare's "Romeo and Juliet" to generate a frequency table for the English
+language that I could compare my encrypted file to.
