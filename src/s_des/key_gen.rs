@@ -1,25 +1,23 @@
+use std::io::{Error, ErrorKind};
+use super::Key;
+
 // Constants for permutation tables
 const P10_TABLE: [u8; 10] = [3, 5, 2, 7, 4, 10, 1, 9, 8, 6];
 const P8_TABLE: [u8; 8] = [6, 3, 7, 4, 8, 5, 10, 9];
-
-pub struct Key {
-    pub k1: u8,
-    pub k2: u8,
-}
 
 pub fn gen_keys() -> Vec<Key> {
     let mut keys = Vec::with_capacity(1024);
 
     for key in 0..1024 {
-        keys.push(gen_subkeys(key));
+        keys.push(gen_subkeys(key).unwrap());
     }
 
     keys
 }
 
-pub(crate) fn gen_subkeys(key: u16) -> Key {
+pub(crate) fn gen_subkeys(key: u16) -> Result<Key, Error> {
     if key > 0b1111111111 {
-        panic!("Key must be 10 bits or less");
+        return Err(Error::new(ErrorKind::InvalidInput, "Key must be 10 bits"));
     }
 
     // Apply initial permutation (P10) to the 10-bit key
@@ -61,5 +59,5 @@ pub(crate) fn gen_subkeys(key: u16) -> Key {
         k2 |= ((combined >> (10 - index)) & 1) as u8;
     }
 
-    Key { k1, k2 }
+    Ok(Key { k1, k2 })
 }
