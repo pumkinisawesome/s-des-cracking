@@ -6,9 +6,11 @@ use std::env;
 use std::fs::File;
 use std::io::Read;
 
-mod keys;
+mod s_des;
+mod entropy;
 
-use keys::gen_keys;
+use s_des::{gen_keys, gen_subkeys};
+use entropy::calc_entropy;
 
 fn main() {
     let keys = gen_keys();
@@ -18,26 +20,9 @@ fn main() {
     }
 
     println!("Total keys generated: {}", keys.len());
-}
 
-// function to determine information entropy of a vector of bytes
-fn calc_entropy(data: &[u8]) -> f64 {
-    // create a hash map to store the frequency of each byte
-    let mut freq_map = HashMap::new();
+    let my_key = gen_subkeys(0b1101001101);
 
-    // count the frequency of each byte
-    for &byte in data {
-        let count = freq_map.entry(byte).or_insert(0);
-        *count += 1;
-    }
-
-    // calculate the entropy
-    let mut entropy = 0.0;
-    let data_len = data.len() as f64;
-    for value in freq_map.values() {
-        let freq = *value as f64 / data_len;
-        entropy -= freq * freq.log2();
-    }
-
-    entropy
+    println!("My key:");
+    println!("k1: {:#010b}, k2: {:#010b}", my_key.k1, my_key.k2);
 }

@@ -2,12 +2,12 @@
 const P10_TABLE: [u8; 10] = [3, 5, 2, 7, 4, 10, 1, 9, 8, 6];
 const P8_TABLE: [u8; 8] = [6, 3, 7, 4, 8, 5, 10, 9];
 
-pub(crate) struct Key {
+pub struct Key {
     pub k1: u8,
     pub k2: u8,
 }
 
-pub(crate) fn gen_keys() -> Vec<Key> {
+pub fn gen_keys() -> Vec<Key> {
     let mut keys = Vec::with_capacity(1024);
 
     for key in 0..1024 {
@@ -17,7 +17,11 @@ pub(crate) fn gen_keys() -> Vec<Key> {
     keys
 }
 
-fn gen_subkeys(key: u16) -> Key {
+pub(crate) fn gen_subkeys(key: u16) -> Key {
+    if key > 0b1111111111 {
+        panic!("Key must be 10 bits or less");
+    }
+
     // Apply initial permutation (P10) to the 10-bit key
     let mut permuted_key = 0;
     for &index in P10_TABLE.iter() {
