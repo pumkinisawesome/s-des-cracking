@@ -9,11 +9,12 @@ I started off by asking ChatGPT for some help in generating a vague plan of the
 layout of my project, by asking this:
 
 > **Me:**
-> I'm going to be making a Rust project to crack the encryption of a file 
-> encrypted with S-DES encryption. Can you help me with this? I'm relatively 
+> I'm going to be making a Rust project to crack the encryption of a file
+> encrypted with S-DES encryption. Can you help me with this? I'm relatively
 > new to Rust.
 >
-> I'd just like to start off with some pseudocode. What would be the best way of reading in the file?
+> I'd just like to start off with some pseudocode. What would be the best way
+> of reading in the file?
 
 I used some of its suggestions and some of my own ideas to build up a document
 with some pseudocode to help me guide the directio of the project and decide
@@ -83,7 +84,8 @@ Up until this point, all of my implementation (apart from my file read testing)
 was all inside `main.rs`. As it was getting cluttered, I told GitHub Copilot
 what I planned to add in the future, and asked if it thought it would make
 sense to split my code into modules. As it could access my current files
-already, it suggested I split my code as shown in the screenshot found at `attachments/copilot_module_suggestion.jpg`.
+already, it suggested I split my code as shown in the screenshot found at
+`attachments/copilot_module_suggestion.jpg`.s
 
 The screenshot mentioned above also shows how I talked back and forth to
 finalise the module structure before implementing it, and how it helped me to
@@ -126,10 +128,10 @@ response was interesting:
 >
 > **GitHub Copilot** used @workspace
 >
-> The decision to use `pub` or `pub(crate)` depends on how you want to structure
-> the visibility of your modules and functions. If you use `pub`, the item will
-> be accessible from any code that uses your crate, while `pub(crate)` makes the
-> item public within your crate only.
+> The decision to use `pub` or `pub(crate)` depends on how you want to
+> structure the visibility of your modules and functions. If you use `pub`, the
+> item will be accessible from any code that uses your crate, while
+> `pub(crate)` makes the item public within your crate only.
 >
 > As for whether your project is worth publishing as a crate, it's hard to say
 > without more context. The project seems to be a specific implementation of
@@ -192,10 +194,54 @@ was plain text, and when it was encrypted. I was expecting the entropy to be
 different, but realised that there would be a problem with this method of
 determining that the encryption had been a success.
 
-## Shakespeare character frequency analisis
+## Shakespeare character frequency analysis experiment
 
-I used GitHub Copilot to write me a program to take in a file, and output the
-frequency of each character in the file, which it did so completely correctly,
-and I guided it to modify the file slightly to better fit my needs. I fed it
-Shakespeare's "Romeo and Juliet" to generate a frequency table for the English
-language that I could compare my encrypted file to.
+After talking with Clint, the project guidelines were changed, so that we were
+now to use character frequency analysis to determine the correct key.
+
+I used GitHub Copilot to write me a program in my `testing_ground` directory to
+take in a file, and output the frequency of each character in the file, which
+it did so completely correctly, and I guided it to modify the file slightly to
+better fit my needs. I fed it Shakespeare's "Romeo and Juliet" to generate a
+frequency table for the English language that I could compare my encrypted file
+to.
+
+## Redesigning main
+
+I now had all of the pieces I needed to be able to write the whole proram's
+functionality, all I had to do was implement the code from character frequency
+code from `testing_ground/ascii_frequency` into the main project and combine
+all of the pieces together. I decided that I would write the code to combine
+all of the pieces together first, so I rewrote main to use my functions in the
+way I laid out in `docs/pseudocode_plan.md`. For the character frequency
+functions that I hadn't implemented yet, I just called nonexistent functions,
+for me to implement later.
+
+## Character frequency analysis
+
+At first, I tried using GitHub Copilot to implement the character frequency
+analysis into my project, but it didn't fully understand my project layout and
+led to some bugs, so I removed it and rewrote it myself, using the code it
+generated in `testing_ground/ascii_frequency` as a reference, and asking
+Copilot for syntax help in specific circumstances.
+
+## Testing with a real file and character frequency analysis
+
+I wrote some scratch code in main to encrypt a file with a chosen key (of
+course I had to use `keys[42]`...), then removed the scratch code and ran the
+project to test decrypting the file. After fixing a little mistake I made with
+reading in the Shakespearean character frequency file (instead of reading in
+the data stored in that file, I was analyisng the frequency of the characters,
+so the frequency distribution I was attempting to match was only made up of
+numerical characters and the character ":"), I ran the program and it
+successfully decrypted the file in less than a second!
+
+## Redesigning main again
+
+The project was now technically complete, but I wanted to make it much easier
+to use and a bit more user friendly. I redesigned main to accept command line
+arguments, which would tell it to either generate an encrypted file from
+plaintext using a random key, or crack the encryption on an encrypted file and
+generate a decrypted file.
+
+The project was finally complete!
