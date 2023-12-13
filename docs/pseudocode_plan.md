@@ -1,12 +1,12 @@
 # S-DES cracking Rust pseudocode
 
-1. ~~Initialise the encrypted file~~
-   1. ~~Load file into Vector of bytes~~
-2. ~~Initialise range of possible keys~~
+1. Initialise the encrypted file
+   1. Load file into Vector of bytes
+2. Initialise range of possible keys
 
-   ~~Repeat for each key in the range:~~
-   1. ~~Generate key~~
-   2. ~~Generate subkeys from key~~
+   Repeat for each key in the range:
+   1. Generate key
+   2. Generate subkeys from key
 3. For each key in the range:
     1. Decrypt the file using the key
     2. Calculate the frequency of each byte in the decrypted file
