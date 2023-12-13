@@ -9,7 +9,9 @@ I started off by asking ChatGPT for some help in generating a vague plan of the
 layout of my project, by asking this:
 
 > **Me:**
-> I'm going to be making a Rust project to crack the encryption of a file encrypted with S-DES encryption. Can you help me with this? I'm relatively new to Rust.
+> I'm going to be making a Rust project to crack the encryption of a file 
+> encrypted with S-DES encryption. Can you help me with this? I'm relatively 
+> new to Rust.
 >
 > I'd just like to start off with some pseudocode. What would be the best way of reading in the file?
 
