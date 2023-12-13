@@ -32,6 +32,7 @@ fn main() {
     }
 }
 
+/// Prints the proper usage of the command line arguments
 fn print_usage() {
     println!("Usage:\tcargo run [gen|crack] <filename>");
     println!();
