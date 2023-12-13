@@ -28,6 +28,7 @@ fn main() {
         }
     } else {
         print_usage();
+
     }
 }
 
@@ -40,7 +41,7 @@ fn print_usage() {
     println!("\t\tfilename defaults to encrypted");
 }
 
-// Generates an encrypted file with a random key
+/// Generates an encrypted file with a random key
 fn gen_test_file(file_name: &str) {
     let file_path = format!("data/{}.txt", file_name);
 
@@ -62,7 +63,7 @@ fn gen_test_file(file_name: &str) {
     println!("{} bytes saved to {}", encrypted_data.len(), file_path);
 }
 
-// Cracks an encrypted file with brute force
+/// Cracks an encrypted file with brute force
 fn crack_file(file_name: &str) {
     let file_path = format!("data/{}.txt", file_name);
 

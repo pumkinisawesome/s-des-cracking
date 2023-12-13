@@ -2,6 +2,7 @@ use std::fs::File;
 use std::io::{Read, Write};
 use std::process::exit;
 
+/// Read the contents of a file into a string
 pub fn read_file_to_string(file_path: &str) -> String {
     let mut file = match File::open(file_path) {
         Ok(file) => file,
@@ -24,6 +25,7 @@ pub fn read_file_to_string(file_path: &str) -> String {
     data
 }
 
+/// Read the contents of a file into a vector of bytes
 pub fn read_file_to_bytes(file_path: &str) -> Vec<u8> {
     let mut file = match File::open(file_path) {
         Ok(file) => file,
@@ -46,6 +48,7 @@ pub fn read_file_to_bytes(file_path: &str) -> Vec<u8> {
     data
 }
 
+/// Write a vector of bytes to a file
 pub fn write_bytes_to_file(file_path: &str, data: &[u8]) {
     let mut output_file = match File::create(file_path) {
         Ok(file) => file,

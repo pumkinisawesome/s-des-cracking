@@ -1,10 +1,12 @@
 use super::Key;
 
+// Permutation tables
 const IP_TABLE: [u8; 8] = [2, 6, 3, 1, 4, 8, 5, 7];
 const INVERSE_IP_TABLE: [u8; 8] = [4, 1, 3, 5, 7, 2, 8, 6];
 const EP_TABLE: [u8; 8] = [4, 1, 2, 3, 2, 3, 4, 1];
 const P4_TABLE: [u8; 4] = [2, 4, 3, 1];
 
+// S-boxes
 const S0_BOX: [[u8; 4]; 4] = [
     [0b01, 0b00, 0b11, 0b10],
     [0b11, 0b10, 0b01, 0b00],
@@ -18,14 +20,18 @@ const S1_BOX: [[u8; 4]; 4] = [
     [0b10, 0b01, 0b00, 0b11],
 ];
 
+/// Encrypts `data` using `key`
 pub fn encrypt(data: &[u8], key: &Key) -> Vec<u8> {
     crypt(data, key.k1, key.k2)
 }
 
+/// Decrypts the `data` using `key`
 pub fn decrypt(data: &[u8], key: &Key) -> Vec<u8> {
     crypt(data, key.k2, key.k1)
 }
 
+/// As S-DES is symmetric, this function is used by both `encrypt` and
+/// `decrypt`, with the `k1` and `k2` swapped for decryption
 fn crypt(data: &[u8], k1: u8, k2: u8) -> Vec<u8> {
     let mut output = Vec::with_capacity(data.len());
 
@@ -61,6 +67,7 @@ fn crypt(data: &[u8], k1: u8, k2: u8) -> Vec<u8> {
     output
 }
 
+/// Performs a single Feistel round
 fn feistel_round(left: u8, right: u8, key: u8) -> (u8, u8) {
     // Apply expansion permutation (EP) to the right half
     let mut expanded_right = 0;
@@ -95,6 +102,7 @@ fn feistel_round(left: u8, right: u8, key: u8) -> (u8, u8) {
     (new_left, new_right)
 }
 
+/// Applies the given S-box to the input
 fn apply_sbox(input: u8, sbox: &[[u8; 4]; 4]) -> u8 {
     let row = ((input & 0b1000) >> 2) | (input & 1);
     let col = (input & 0b0110) >> 1;
