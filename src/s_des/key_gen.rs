@@ -1,5 +1,13 @@
 use std::io::{Error, ErrorKind};
-use super::Key;
+
+/// Struct for holding the two subkeys
+pub struct Key {
+    pub k1: u8,
+    pub k2: u8,
+}
+
+// Constant for max value of 10-bit key
+pub const MAX_KEY: u16 = 0b1111111111;
 
 // Permutation tables
 const P10_TABLE: [u8; 10] = [3, 5, 2, 7, 4, 10, 1, 9, 8, 6];
@@ -7,9 +15,9 @@ const P8_TABLE: [u8; 8] = [6, 3, 7, 4, 8, 5, 10, 9];
 
 /// Generates all possible keys
 pub fn gen_keys() -> Vec<Key> {
-    let mut keys = Vec::with_capacity(1024);
+    let mut keys = Vec::with_capacity(MAX_KEY as usize);
 
-    for key in 0..1024 {
+    for key in 0..MAX_KEY+1 {
         keys.push(gen_subkeys(key).unwrap());
     }
 

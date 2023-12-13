@@ -4,7 +4,7 @@ mod s_des;
 mod file_io;
 mod char_freq_analysis;
 
-use crate::s_des::{gen_keys, encrypt, decrypt, Key};
+use crate::s_des::{gen_keys, encrypt, decrypt, Key, MAX_KEY};
 use crate::file_io::{read_file_to_bytes, write_bytes_to_file};
 use crate::char_freq_analysis::{
     freq_file_to_hashmap,
@@ -50,7 +50,7 @@ fn gen_test_file(file_name: &str) {
 
     // Generate random key
     let mut rng = rand::thread_rng();
-    let key = rng.gen_range(0..1024);
+    let key = rng.gen_range(0..MAX_KEY+1);
     let key = s_des::gen_subkeys(key).unwrap();
     println!("Key:\n\tk1: {:#010b}, \n\tk2: {:#010b}", key.k1, key.k2);
 
