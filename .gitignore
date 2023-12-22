@@ -1,3 +1,4 @@
 /target
 /docs/simplified-des.pdf
 /data/*
+.DS_Store

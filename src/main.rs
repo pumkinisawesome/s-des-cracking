@@ -28,7 +28,6 @@ fn main() {
         }
     } else {
         print_usage();
-
     }
 }
 
