@@ -1,6 +1,6 @@
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{Read, Write};
-use std::collections::HashMap;
 
 fn analyse_frequency(file_path: &str) -> std::io::Result<(HashMap<u8, usize>, usize)> {
     let mut file = File::open(file_path)?;
@@ -18,7 +18,11 @@ fn analyse_frequency(file_path: &str) -> std::io::Result<(HashMap<u8, usize>, us
     Ok((frequency, total))
 }
 
-fn write_to_file(mut frequency: HashMap<u8, usize>, total: usize, file_path: &str) -> std::io::Result<()> {
+fn write_to_file(
+    mut frequency: HashMap<u8, usize>,
+    total: usize,
+    file_path: &str,
+) -> std::io::Result<()> {
     let mut file = File::create(file_path)?;
 
     // Convert HashMap to Vec of tuples
