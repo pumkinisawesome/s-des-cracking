@@ -1,5 +1,7 @@
 # S-DES Cracking
 
+[![wakatime](https://wakatime.com/badge/user/d55b19d4-f637-4b62-bbf5-e52fffe9abad/project/018c3377-d4d5-405b-a4bd-acd4f7514246.svg)](https://wakatime.com/badge/user/d55b19d4-f637-4b62-bbf5-e52fffe9abad/project/018c3377-d4d5-405b-a4bd-acd4f7514246)
+
 This is a project I worked on for my Cybersecurity class. The assignment was 
 to write a brute-force cracking program for the S-DES algorithm, and we were
 asked to write it in Java. However, I had already written quite a lot of Java,
